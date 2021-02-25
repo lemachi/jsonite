@@ -14,7 +14,7 @@ What you can do with Jsonite:
 Here is how you parse a JSON string:
 
 ```Java
-    JsonValue foo = JsonValue.parse("42");
+JsonValue foo = JsonValue.parse("42");
 ```
 
 This may look a bit surprising, Jsonite can parse not just objects but also primitives such as
@@ -23,10 +23,10 @@ numbers and strings.
 Here is a more complex example:
 
 ```Java
-    JsonValue foo = JsonValue.parse("{\"foo\":42}");
-    JsonObject fooObj = foo.asObject();
-    JsonValue v = fooObj.get("foo");
-    int i = v.intValue();
+JsonValue foo = JsonValue.parse("{\"foo\":42}");
+JsonObject fooObj = foo.asObject();
+JsonValue v = fooObj.get("foo");
+int i = v.intValue();
 ```
 
 ## String Conversions
@@ -34,10 +34,10 @@ Here is a more complex example:
 To convert a hierarchy of `JsonValue` instances back into strings, just call `toString()`:
 
 ```Java
-    JsonObject obj = new JsonObject();
-    obj.put("foo", 42);
-    obj.put("bar", "foobar");
-    String str = obj.toString(); // {"foo":42,"bar":"foobar"}
+JsonObject obj = new JsonObject();
+obj.put("foo", 42);
+obj.put("bar", "foobar");
+String str = obj.toString(); // {"foo":42,"bar":"foobar"}
 ```
 
 ## JSON Object Hierarchy
@@ -66,7 +66,8 @@ There are 6 different types of tokens:
  * `END_ARRAY`:  Occurs when the end araay token `]` appears.
  * `MEMBER_NAME`: Occurs when an object property occurs.
  * `PRIMITIVE`: Occurs when a primitive occurs as an element of an array or as a
-        property value.
+        property value. Primitives can be either the boolean values `true` or `false`,
+        a string in double quotes or an integer or floating point number.
         
 Every token has a type associated with is, the `MEMBER_NAME` and `PRIMITIVE` tokens also
 have a value.
@@ -74,31 +75,33 @@ have a value.
 Here is some sample code to dump the events of a JSON string:
 
 ```Java
-    JsonValue foo = JsonValue.parse("{\"foo\":[1,42]}");
-    final StringBuilder buffer = new StringBuilder();
+JsonValue foo = JsonValue.parse("{\"foo\":[1,42]}");
+final StringBuilder buffer = new StringBuilder();
 
-    Transformation.copy(new Consumer() {
-        @Override
-        public void append(Token token) throws BrokenStreamException {
-            buffer.append(token);
-            buffer.append(System.lineSeparator());
-        }
-    }, foo);
+Transformation.copy(new Consumer() {
+    @Override
+    public void append(Token token) throws BrokenStreamException {
+        buffer.append(token);
+        buffer.append(System.lineSeparator());
+    }
+}, foo);
 ```
 
 The output of this code will be:
 
 ```
-    START_OBJECT
-    MEMBER_NAME:"foo"
-    START_ARRAY
-    PRIMITIVE:1
-    PRIMITIVE:42
-    END_ARRAY
-    END_OBJECT
+START_OBJECT
+MEMBER_NAME:"foo"
+START_ARRAY
+PRIMITIVE:1
+PRIMITIVE:42
+END_ARRAY
+END_OBJECT
 ```
 
-Transformations can dramatically reduce the memory consumption of your code. The above code
-reads a m,inimum amount of characters from the input string to determine the tokens to
+Transformations can dramatically reduce the memory footprint of your code. The above code
+reads a minimum amount of characters from the input string to determine the tokens to
 emit to the consumer. When done right, you can scan input data of unbound size.
 
+The class `Transformation` provides transformations between common `Provider`s and `Consumer`s, or
+you can roll your own as described above.
