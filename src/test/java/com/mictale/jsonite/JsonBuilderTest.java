@@ -8,7 +8,7 @@ import static org.junit.Assert.assertThat;
 public class JsonBuilderTest {
 
     @Test
-    public void buildObject() {
+    public void testBuildObject() {
         JsonObject o = JsonBuilder.withObject().
                 put("foo", 1).
                 put("bar", 2).
@@ -21,7 +21,7 @@ public class JsonBuilderTest {
     }
 
     @Test
-    public void buildArray() {
+    public void testBuildArray() {
         JsonArray o = JsonBuilder.withArray().
                 value("foo").
                 value("bar").
@@ -34,10 +34,10 @@ public class JsonBuilderTest {
     }
 
     @Test
-    public void buildArrayOfObjects() {
+    public void testBuildArrayOfObjects() {
         JsonArray o = JsonBuilder.withArray().
-                object().endObject().
-                object().endObject().
+                beginObject().endObject().
+                beginObject().endObject().
                 endArray().
                 value().asArray();
 
@@ -47,10 +47,10 @@ public class JsonBuilderTest {
     }
 
     @Test
-    public void complexObjects() {
+    public void testComplexObjects() {
         JsonObject o = JsonBuilder.withObject().
-                    put("foo").object().
-                        put("bar").object().
+                    put("foo").beginObject().
+                        put("bar").beginObject().
                             endObject().
                         put("bar", 12).
                     endObject().

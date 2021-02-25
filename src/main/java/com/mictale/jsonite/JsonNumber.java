@@ -122,7 +122,11 @@ public final class JsonNumber extends JsonValue {
 				}
 			}
 			else {
-				return new JsonNumber(n.doubleValue());
+			    double value = n.doubleValue();
+			    if (!Double.isFinite(value)) {
+                    throw new JsonException("Only finite floating point accepted: " + n);
+                }
+				return new JsonNumber(value);
 			}
 		}
 	}

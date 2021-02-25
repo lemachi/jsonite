@@ -15,7 +15,7 @@
  * own.
  * <p>
  * Most classes in the object tree extend {@link com.mictale.jsonite.JsonValue} and this class also
- * contains a factory method {@link com.mictale.jsonite.JsonValue#of(Object)} to produce
+ * contains a factory method {@link com.mictale.jsonite.JsonValue#of(java.lang.Object)} to produce
  * new JSON instances from Java types.
  * <p>
  * A value can either be a primitive or a composite. Primitive values are immutable. Primitives are

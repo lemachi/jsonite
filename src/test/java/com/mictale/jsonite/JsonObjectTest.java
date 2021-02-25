@@ -2,10 +2,6 @@ package com.mictale.jsonite;
 
 import org.junit.Test;
 
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -13,20 +9,20 @@ import static org.junit.Assert.assertThat;
 public class JsonObjectTest {
 
     @Test
-    public void sizeZero() {
+    public void testSizeZero() {
         JsonObject obj = new JsonObject();
         assertThat(obj.size(), is(0));
     }
 
     @Test
-    public void sizeNonZero() {
+    public void testSizeNonZero() {
         JsonObject obj = new JsonObject();
         obj.put("foo", "bar");
         assertThat(obj.size(), is(1));
     }
 
     @Test
-    public void oberwriteProperty() {
+    public void testOberwriteProperty() {
         JsonObject obj = new JsonObject();
         obj.put("foo", "bar");
         assertThat(obj.size(), is(1));
@@ -36,32 +32,32 @@ public class JsonObjectTest {
     }
 
     @Test
-    public void setProperty() {
+    public void testSetProperty() {
         JsonObject obj = new JsonObject();
         obj.put("foo", "bar");
         assertThat(obj.get("foo"), is(JsonString.of("bar")));
     }
 
     @Test
-    public void type() {
+    public void testType() {
         JsonObject obj = new JsonObject();
         assertThat(obj.getType(), sameInstance(JsonType.OBJECT));
     }
 
     @Test
-    public void asObject() {
+    public void testAsObject() {
         JsonObject obj = new JsonObject();
         assertThat(obj.asObject(), sameInstance(obj));
     }
 
     @Test(expected = JsonConversionException.class)
-    public void asArray() {
+    public void testAsArray() {
         JsonObject obj = new JsonObject();
         obj.asArray();
     }
 
     @Test
-    public void clear() {
+    public void testClear() {
         JsonObject obj = new JsonObject();
         obj.put("foo", 1);
         obj.put("bar", "hello");
@@ -70,7 +66,7 @@ public class JsonObjectTest {
     }
 
     @Test
-    public void containsKey() {
+    public void testContainsKey() {
         JsonObject obj = new JsonObject();
         obj.put("foo", 1);
         obj.put("bar", "hello");
@@ -79,7 +75,7 @@ public class JsonObjectTest {
     }
 
     @Test
-    public void containsValue() {
+    public void testContainsValue() {
         JsonObject obj = new JsonObject();
         obj.put("foo", 1);
         obj.put("bar", "hello");
@@ -89,7 +85,7 @@ public class JsonObjectTest {
     }
 
     @Test
-    public void getWithDefault() {
+    public void testGetWithDefault() {
         JsonObject obj = new JsonObject();
         final JsonValue n = JsonNumber.of(87293);
         final JsonValue a = JsonValue.of("a");
@@ -100,7 +96,7 @@ public class JsonObjectTest {
     }
 
     @Test
-    public void map() {
+    public void testMap() {
         JsonObject obj = new JsonObject();
         obj.put("foo", 123);
         obj.put("bar", "hello");
@@ -110,7 +106,7 @@ public class JsonObjectTest {
     }
 
     @Test
-    public void remove() {
+    public void testRemove() {
         JsonObject obj = new JsonObject();
         obj.put("foo", 123);
         obj.put("bar", "hello");

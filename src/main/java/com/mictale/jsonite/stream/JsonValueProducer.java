@@ -17,6 +17,8 @@
  */
 package com.mictale.jsonite.stream;
 
+import java.util.Map;
+
 import com.mictale.jsonite.JsonArray;
 import com.mictale.jsonite.JsonBoolean;
 import com.mictale.jsonite.JsonNull;
@@ -24,8 +26,6 @@ import com.mictale.jsonite.JsonNumber;
 import com.mictale.jsonite.JsonObject;
 import com.mictale.jsonite.JsonString;
 import com.mictale.jsonite.JsonValue;
-
-import java.util.Map;
 
 /**
  * Produces a hierarchy of {@link JsonValue}s from a stream.
@@ -36,7 +36,7 @@ public final class JsonValueProducer implements Producer, JsonVisitor {
 
 	private Consumer consumer;
 	
-	private JsonValue value;
+	private final JsonValue value;
 	
 	public JsonValueProducer(JsonValue value) {
 		this.value = value;

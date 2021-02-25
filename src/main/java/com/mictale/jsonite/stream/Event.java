@@ -75,6 +75,6 @@ public final class Event {
 	
 	@Override
 	public String toString() {
-		return eventType.toString() + ":" + String.valueOf(value);
+		return eventType.toString() + ":" + value;
 	}
 }

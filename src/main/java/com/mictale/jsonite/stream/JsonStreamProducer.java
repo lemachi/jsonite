@@ -17,13 +17,13 @@
  */
 package com.mictale.jsonite.stream;
 
-import com.mictale.jsonite.JsonNumber;
-import com.mictale.jsonite.JsonValue;
-import com.mictale.jsonite.SourcePosition;
-
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
+
+import com.mictale.jsonite.JsonNumber;
+import com.mictale.jsonite.JsonValue;
+import com.mictale.jsonite.SourcePosition;
 
 /**
  * Produces JSON nodes from a character stream.
@@ -49,7 +49,7 @@ public final class JsonStreamProducer implements Producer {
 
 	private int lastChar;
 
-	private StringBuilder buffer = new StringBuilder();
+	private final StringBuilder buffer = new StringBuilder();
 
 	public JsonStreamProducer(Reader reader) {
 		this.reader = reader;

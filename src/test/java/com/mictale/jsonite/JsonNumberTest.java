@@ -10,12 +10,12 @@ import static org.junit.Assert.assertThat;
 public class JsonNumberTest {
 
     @Test(expected = JsonConversionException.class)
-    public void numberAsBoolean() {
+    public void testNumberAsBoolean() {
         JsonNumber.of(123).asBoolean();
     }
 
     @Test
-    public void type() {
+    public void testType() {
         assertThat(JsonNumber.of(123).getType(), sameInstance(JsonType.NUMBER));
     }
 

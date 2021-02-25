@@ -17,12 +17,12 @@
  */
 package com.mictale.jsonite.stream;
 
+import java.util.Stack;
+
 import com.mictale.jsonite.JsonArray;
 import com.mictale.jsonite.JsonException;
 import com.mictale.jsonite.JsonObject;
 import com.mictale.jsonite.JsonValue;
-
-import java.util.Stack;
 
 /**
  * Consumes a {@link JsonValue} and all its children.
@@ -35,7 +35,7 @@ public final class JsonValueConsumer implements Consumer {
 
 	private JsonValue last;
 	
-	private Stack<JsonValue> path = new Stack<>();
+	private final Stack<JsonValue> path = new Stack<>();
 	
 	private void appendValue(JsonValue value) {
 		if (!path.isEmpty()) {

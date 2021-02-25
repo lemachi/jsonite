@@ -15,7 +15,7 @@ import static org.junit.Assert.assertThat;
 public class JsonStreamConsumerTest {
 
     @Test
-    public void appendTrue() {
+    public void testAppendTrue() {
         StringWriter w = new StringWriter();
         JsonStreamConsumer c = new JsonStreamConsumer(w);
         c.append(new Event(EventType.PRIMITIVE, JsonValue.TRUE));
@@ -23,7 +23,7 @@ public class JsonStreamConsumerTest {
     }
 
     @Test
-    public void appendEmptyArray() {
+    public void testAppendEmptyArray() {
         StringWriter w = new StringWriter();
         JsonStreamConsumer c = new JsonStreamConsumer(w);
         c.append(new Event(EventType.START_ARRAY, null));
@@ -32,7 +32,7 @@ public class JsonStreamConsumerTest {
     }
 
     @Test
-    public void appendArray() {
+    public void testAppendArray() {
         StringWriter w = new StringWriter();
         JsonStreamConsumer c = new JsonStreamConsumer(w);
         c.append(new Event(EventType.START_ARRAY, null));
@@ -44,7 +44,7 @@ public class JsonStreamConsumerTest {
     }
 
     @Test
-    public void appendObject() {
+    public void testAppendObject() {
         StringWriter w = new StringWriter();
         JsonStreamConsumer c = new JsonStreamConsumer(w);
         c.append(new Event(EventType.START_OBJECT, null));
@@ -57,7 +57,7 @@ public class JsonStreamConsumerTest {
     }
 
     @Test
-    public void appendObjectPretty() {
+    public void testAppendObjectPretty() {
         StringWriter w = new StringWriter();
         JsonStreamConsumer c = new JsonStreamConsumer(w);
         c.append(new Event(EventType.START_OBJECT, null));

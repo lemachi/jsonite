@@ -9,7 +9,7 @@ import static org.junit.Assert.assertNotNull;
 public class JsonTest {
 
     @Test
-	public void date() {
+	public void testDate() {
 		long largestInteger = 9007199254740992L;
 		Date date = new Date(largestInteger);
 		String str = date.toString();

@@ -1,5 +1,6 @@
 package com.mictale.jsonite;
 
+import com.mictale.jsonite.stream.Consumer;
 import com.mictale.jsonite.stream.Event;
 import com.mictale.jsonite.stream.EventType;
 import com.mictale.jsonite.stream.JsonValueConsumer;
@@ -9,21 +10,29 @@ import com.mictale.jsonite.stream.JsonValueConsumer;
  */
 public final class JsonBuilder {
 
-    private JsonValueConsumer consumer;
+    private final Consumer consumer;
 
     private JsonBuilder() {
-        consumer = new JsonValueConsumer();
+        this(new JsonValueConsumer());
+    }
+
+    private JsonBuilder(Consumer consumer) {
+        this.consumer = consumer;
+    }
+
+    public static JsonBuilder fromConsumer(Consumer consumer) {
+        return new JsonBuilder(consumer);
     }
 
     public static JsonBuilder withArray() {
-        return new JsonBuilder().array();
+        return new JsonBuilder().beginArray();
     }
 
     public static JsonBuilder withObject() {
-        return new JsonBuilder().object();
+        return new JsonBuilder().beginObject();
     }
 
-    public JsonBuilder array() {
+    public JsonBuilder beginArray() {
         consumer.append(new Event(EventType.START_ARRAY, null, null));
         return this;
     }
@@ -33,7 +42,7 @@ public final class JsonBuilder {
         return this;
     }
 
-    public JsonBuilder object() {
+    public JsonBuilder beginObject() {
         consumer.append(new Event(EventType.START_OBJECT, null, null));
         return this;
     }
@@ -64,6 +73,10 @@ public final class JsonBuilder {
     }
 
     public JsonValue value() {
-        return consumer.getValue();
+        return ((JsonValueConsumer)consumer).getValue();
+    }
+
+    public Consumer getConsumer() {
+        return consumer;
     }
 }

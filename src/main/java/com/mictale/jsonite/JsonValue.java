@@ -17,16 +17,16 @@
  */
 package com.mictale.jsonite;
 
-import com.mictale.jsonite.stream.JsonStreamProducer;
-import com.mictale.jsonite.stream.JsonValueConsumer;
-import com.mictale.jsonite.stream.JsonVisitor;
-import com.mictale.jsonite.stream.Transformation;
-
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Collection;
 import java.util.Date;
+
+import com.mictale.jsonite.stream.JsonStreamProducer;
+import com.mictale.jsonite.stream.JsonValueConsumer;
+import com.mictale.jsonite.stream.JsonVisitor;
+import com.mictale.jsonite.stream.Transformation;
 
 /**
  * The most basic JSON type.
@@ -88,7 +88,7 @@ public abstract class JsonValue {
 	 * <td>{@link JsonValue#TRUE}</td>
 	 * </tr>
 	 * <tr>
-	 * <td><code>{@link Boolean#TRUE}</code></td>
+	 * <td><code>{@link java.lang.Boolean#TRUE}</code></td>
 	 * <td>{@link JsonValue#TRUE}</td>
 	 * </tr>
 	 * <tr>
@@ -96,15 +96,15 @@ public abstract class JsonValue {
 	 * <td>{@link JsonValue#FALSE}</td>
 	 * </tr>
 	 * <tr>
-	 * <td><code>{@link Boolean#FALSE}</code></td>
+	 * <td><code>{@link java.lang.Boolean#FALSE}</code></td>
 	 * <td>{@link JsonValue#FALSE}</td>
 	 * </tr>
 	 * <tr>
-	 * <td><code>{@link String}</code></td>
+	 * <td><code>{@link java.lang.String}</code></td>
 	 * <td>{@link JsonString}</td>
 	 * </tr>
 	 * <tr>
-	 * <td><code>{@link Number}</code></td>
+	 * <td><code>{@link java.lang.Number}</code></td>
 	 * <td>{@link JsonNumber}</td>
 	 * </tr>
 	 * <tr>

@@ -17,12 +17,12 @@
  */
 package com.mictale.jsonite;
 
-import com.mictale.jsonite.stream.JsonVisitor;
-
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
+
+import com.mictale.jsonite.stream.JsonVisitor;
 
 /**
  * A JSON Object is a set of JSON values known by name.

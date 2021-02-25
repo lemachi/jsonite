@@ -17,15 +17,15 @@
  */
 package com.mictale.jsonite.stream;
 
+import java.io.IOException;
+import java.io.Writer;
+
 import com.mictale.jsonite.JsonArray;
 import com.mictale.jsonite.JsonBoolean;
 import com.mictale.jsonite.JsonNull;
 import com.mictale.jsonite.JsonNumber;
 import com.mictale.jsonite.JsonObject;
 import com.mictale.jsonite.JsonString;
-
-import java.io.IOException;
-import java.io.Writer;
 
 /**
  * Consumes {@link Event}s by writing them to a specified {@link Writer}.

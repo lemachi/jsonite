@@ -1,10 +1,10 @@
 package com.mictale.jsonite.stream;
 
-import com.mictale.jsonite.JsonValue;
-
 import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
+
+import com.mictale.jsonite.JsonValue;
 
 /**
  * Provides transformation utilities.
