@@ -87,6 +87,10 @@ public final class Transformation {
         copy(new JsonStreamConsumer(consumer), new JsonValueProducer(value));
     }
 
+    public static void copy(Consumer consumer, JsonValue value) throws BrokenStreamException {
+        copy(consumer, new JsonValueProducer(value));
+    }
+
     public static void prettyCopy(Writer consumer, JsonValue value) throws BrokenStreamException {
         copy(new JsonPrettyStreamConsumer(consumer), new JsonValueProducer(value));
     }

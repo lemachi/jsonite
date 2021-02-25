@@ -1,8 +1,8 @@
 package com.mictale.jsonite;
 
 import com.mictale.jsonite.stream.Consumer;
-import com.mictale.jsonite.stream.Event;
-import com.mictale.jsonite.stream.EventType;
+import com.mictale.jsonite.stream.Token;
+import com.mictale.jsonite.stream.TokenType;
 import com.mictale.jsonite.stream.JsonValueConsumer;
 
 /**
@@ -33,27 +33,27 @@ public final class JsonBuilder {
     }
 
     public JsonBuilder beginArray() {
-        consumer.append(new Event(EventType.START_ARRAY, null, null));
+        consumer.append(new Token(TokenType.START_ARRAY, null, null));
         return this;
     }
 
     public JsonBuilder endArray() {
-        consumer.append(new Event(EventType.END_ARRAY, null, null));
+        consumer.append(new Token(TokenType.END_ARRAY, null, null));
         return this;
     }
 
     public JsonBuilder beginObject() {
-        consumer.append(new Event(EventType.START_OBJECT, null, null));
+        consumer.append(new Token(TokenType.START_OBJECT, null, null));
         return this;
     }
 
     public JsonBuilder endObject() {
-        consumer.append(new Event(EventType.END_OBJECT, null, null));
+        consumer.append(new Token(TokenType.END_OBJECT, null, null));
         return this;
     }
 
     public JsonBuilder put(String key) {
-        consumer.append(new Event(EventType.MEMBER_NAME, JsonString.of(key), null));
+        consumer.append(new Token(TokenType.MEMBER_NAME, JsonString.of(key), null));
         return this;
     }
 
@@ -62,13 +62,13 @@ public final class JsonBuilder {
     }
 
     public JsonBuilder put(String key, JsonValue value) {
-        consumer.append(new Event(EventType.MEMBER_NAME, JsonString.of(key), null));
-        consumer.append(new Event(EventType.PRIMITIVE, value, null));
+        consumer.append(new Token(TokenType.MEMBER_NAME, JsonString.of(key), null));
+        consumer.append(new Token(TokenType.PRIMITIVE, value, null));
         return this;
     }
 
     public JsonBuilder value(Object o) {
-        consumer.append(new Event(EventType.PRIMITIVE, JsonValue.of(o), null));
+        consumer.append(new Token(TokenType.PRIMITIVE, JsonValue.of(o), null));
         return this;
     }
 

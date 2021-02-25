@@ -20,14 +20,14 @@ package com.mictale.jsonite.stream;
 import com.mictale.jsonite.JsonValue;
 
 /**
- * Produces {@link Event}s.
+ * Produces {@link Token}s.
  * <p>
- * A JSON producer generates a series of {@link Event}s. These {@link Event}s represent a logical
- * JSON stream where every element in the stream consists of a {@link EventType} and a {@link JsonValue}.
+ * A JSON producer generates a series of {@link Token}s. These {@link Token}s represent a logical
+ * JSON stream where every element in the stream consists of a {@link TokenType} and a {@link JsonValue}.
  *
  * Implementations of this interface are not checking the validity of a specific event sequence.
- * For example, a {@link EventType#START_ARRAY} could be immediately followed by a
- * {@link EventType#END_OBJECT}. It is up to the {@link Consumer} to detect these errors.
+ * For example, a {@link TokenType#START_ARRAY} could be immediately followed by a
+ * {@link TokenType#END_OBJECT}. It is up to the {@link Consumer} to detect these errors.
  *
  * @author michael@mictale.com
  */

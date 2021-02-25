@@ -3,7 +3,7 @@
  * 
  * This is the JSON streaming API. It provides streaming access to JSON content.
  * The smallest piece of information inside a stream that can be transferred is a
- * {@link com.mictale.jsonite.stream.Event}.
+ * {@link com.mictale.jsonite.stream.Token}.
  * <p>
  * A JSON stream either implements {@link com.mictale.jsonite.stream.Producer} when
  * it produces events that can be read or {@link com.mictale.jsonite.stream.Consumer}
@@ -25,7 +25,7 @@
  * 
  * Events are a sequential description of a tree of JSON values. For every tree of values,
  * there is exactly one sequence of events to describe the tree. Every event has an event type
- * defined in {@link com.mictale.jsonite.stream.EventType}. For example, the JSON tree
+ * defined in {@link com.mictale.jsonite.stream.TokenType}. For example, the JSON tree
  * 
  * <pre>
  * {
@@ -45,7 +45,7 @@
  * END_OBJECT 
  * </pre>
  * 
- * The values of the events (as returned by {@link com.mictale.jsonite.stream.Event#getValue()})
+ * The values of the events (as returned by {@link com.mictale.jsonite.stream.Token#getValue()})
  * contain the actual values of the names and values.
  */
 package com.mictale.jsonite.stream;

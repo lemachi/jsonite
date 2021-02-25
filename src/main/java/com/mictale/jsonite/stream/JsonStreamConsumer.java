@@ -28,7 +28,7 @@ import com.mictale.jsonite.JsonObject;
 import com.mictale.jsonite.JsonString;
 
 /**
- * Consumes {@link Event}s by writing them to a specified {@link Writer}.
+ * Consumes {@link Token}s by writing them to a specified {@link Writer}.
  * 
  * @author michael@mictale.com
  */
@@ -66,9 +66,9 @@ public class JsonStreamConsumer implements Consumer, JsonVisitor {
     }
 
     @Override
-	public void append(Event tuple) throws BrokenStreamException {
+	public void append(Token token) throws BrokenStreamException {
 		try {
-			switch (tuple.getEventType()) {
+			switch (token.getTokenType()) {
 			case START_ARRAY:
 				appendSeparator();
 				writer.write(JsonSyntax.ARRAY_BEGIN);
@@ -95,19 +95,19 @@ public class JsonStreamConsumer implements Consumer, JsonVisitor {
 
 			case MEMBER_NAME:
 				appendSeparator();
-				tuple.getValue().accept(this);
+				token.getValue().accept(this);
 				writer.write(JsonSyntax.OBJECT_MEMBER_SEPARATOR);
                 space();
 				break;
 
 			case PRIMITIVE:
 				appendSeparator();				
-				tuple.getValue().accept(this);
+				token.getValue().accept(this);
 				valueWritten = true;
 				break;
 				
 			default:
-				throw new AssertionError(tuple.getEventType());				
+				throw new AssertionError(token.getTokenType());
 			}
 		} catch (IOException e) {
 			throw new BrokenStreamException(e);

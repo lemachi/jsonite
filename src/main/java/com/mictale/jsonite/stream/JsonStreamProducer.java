@@ -45,7 +45,7 @@ public final class JsonStreamProducer implements Producer {
 	
 	private Consumer consumer;
 
-	private EventType lastNodeType = EventType.UNDEFINED;
+	private TokenType lastNodeType = TokenType.UNDEFINED;
 
 	private int lastChar;
 
@@ -63,9 +63,9 @@ public final class JsonStreamProducer implements Producer {
 		throw new BrokenStreamException("Expected " + expected + " found " + found + " at line " + line + ", position " + column);
 	}
 	
-	private void append(EventType nodeType, JsonValue value) {
+	private void append(TokenType nodeType, JsonValue value) {
 		SourcePosition p = new SourcePosition(position, line, column);
-		Event event = new Event(nodeType, value, p);
+		Token event = new Token(nodeType, value, p);
 		consumer.append(event);
 		this.lastNodeType = nodeType;
 	}
@@ -166,17 +166,17 @@ public final class JsonStreamProducer implements Producer {
 
 	private void parseTrue() throws IOException {
 		eat(JsonSyntax.BOOLEAN_TRUE);
-		append(EventType.PRIMITIVE, JsonValue.TRUE);
+		append(TokenType.PRIMITIVE, JsonValue.TRUE);
 	}
 
 	private void parseFalse() throws IOException {
 		eat(JsonSyntax.BOOLEAN_FALSE);
-		append(EventType.PRIMITIVE, JsonValue.FALSE);
+		append(TokenType.PRIMITIVE, JsonValue.FALSE);
 	}
 
 	private void parseNull() throws IOException {
 		eat(JsonSyntax.NULL);
-		append(EventType.PRIMITIVE, JsonValue.NULL);
+		append(TokenType.PRIMITIVE, JsonValue.NULL);
 	}
 
 	/**
@@ -193,7 +193,7 @@ public final class JsonStreamProducer implements Producer {
 		if (!Character.isDigit((char) lastChar)) {
 			if ('N' == (char)lastChar) {
 				eat("NaN");
-				append(EventType.PRIMITIVE, JsonNumber.of(Double.NaN));
+				append(TokenType.PRIMITIVE, JsonNumber.of(Double.NaN));
 			}
 		}
 		else {
@@ -232,10 +232,10 @@ public final class JsonStreamProducer implements Producer {
 			}
 	
 			if (isReal) {
-				append(EventType.PRIMITIVE, JsonNumber.of(Double.parseDouble(buffer.toString())));
+				append(TokenType.PRIMITIVE, JsonNumber.of(Double.parseDouble(buffer.toString())));
 			} else {
 				Long l = Long.parseLong(buffer.toString());
-				append(EventType.PRIMITIVE, JsonNumber.of(l));
+				append(TokenType.PRIMITIVE, JsonNumber.of(l));
 			}
 		}
 	}
@@ -253,23 +253,23 @@ public final class JsonStreamProducer implements Producer {
 				skipWs();
 				break;
 			case JsonSyntax.OBJECT_BEGIN:
-				append(EventType.START_OBJECT, null);
+				append(TokenType.START_OBJECT, null);
 				break end;
 			case JsonSyntax.OBJECT_END:
-				append(EventType.END_OBJECT, null);
+				append(TokenType.END_OBJECT, null);
 				break end;
 			case JsonSyntax.ARRAY_BEGIN:
-				append(EventType.START_ARRAY, null);
+				append(TokenType.START_ARRAY, null);
 				break end;
 			case JsonSyntax.ARRAY_END:
-				append(EventType.END_ARRAY, null);
+				append(TokenType.END_ARRAY, null);
 				break end;
 			case JsonSyntax.STRING_QUOTE:
 				String str = parseString();
 				if (lastChar == JsonSyntax.OBJECT_MEMBER_SEPARATOR) {
-					append(EventType.MEMBER_NAME, JsonValue.of(str));
+					append(TokenType.MEMBER_NAME, JsonValue.of(str));
 				} else {
-					append(EventType.PRIMITIVE, JsonValue.of(str));
+					append(TokenType.PRIMITIVE, JsonValue.of(str));
 				}
 				break end;
 			case 't':
@@ -321,7 +321,7 @@ public final class JsonStreamProducer implements Producer {
 					skipWs();
 					switch (lastChar) {
 					case JsonSyntax.ARRAY_END:
-						append(EventType.END_ARRAY, null);
+						append(TokenType.END_ARRAY, null);
 						break;
 					default:
 						running = parseAny();

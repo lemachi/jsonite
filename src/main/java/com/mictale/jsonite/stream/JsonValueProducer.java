@@ -50,45 +50,45 @@ public final class JsonValueProducer implements Producer, JsonVisitor {
 
 	@Override
 	public void visit(JsonObject obj) {
-		consumer.append(new Event(EventType.START_OBJECT, obj, obj.getPosition()));
+		consumer.append(new Token(TokenType.START_OBJECT, obj, obj.getPosition()));
 		
 		for (Map.Entry<String, JsonValue> entry : obj.entrySet()) {
 			JsonValue value = entry.getValue();
-			consumer.append(new Event(EventType.MEMBER_NAME, JsonString.of(entry.getKey()), value.getPosition()));
+			consumer.append(new Token(TokenType.MEMBER_NAME, JsonString.of(entry.getKey()), value.getPosition()));
 			value.accept(this);
 		}
 
-		consumer.append(new Event(EventType.END_OBJECT, obj, obj.getPosition()));		
+		consumer.append(new Token(TokenType.END_OBJECT, obj, obj.getPosition()));
 	}
 
 	@Override
 	public void visit(JsonArray arr) {
-		consumer.append(new Event(EventType.START_ARRAY, arr, arr.getPosition()));
+		consumer.append(new Token(TokenType.START_ARRAY, arr, arr.getPosition()));
 		
 		for (JsonValue element : arr) {
 			element.accept(this);
 		}
 
-		consumer.append(new Event(EventType.END_ARRAY, arr, arr.getPosition()));		
+		consumer.append(new Token(TokenType.END_ARRAY, arr, arr.getPosition()));
 	}
 
 	@Override
 	public void visit(JsonString string) {
-		consumer.append(new Event(EventType.PRIMITIVE, string, string.getPosition()));
+		consumer.append(new Token(TokenType.PRIMITIVE, string, string.getPosition()));
 	}
 
 	@Override
 	public void visit(JsonBoolean bool) {
-		consumer.append(new Event(EventType.PRIMITIVE, bool, bool.getPosition()));
+		consumer.append(new Token(TokenType.PRIMITIVE, bool, bool.getPosition()));
 	}
 
 	@Override
 	public void visit(JsonNumber number) {
-		consumer.append(new Event(EventType.PRIMITIVE, number, number.getPosition()));
+		consumer.append(new Token(TokenType.PRIMITIVE, number, number.getPosition()));
 	}
 
 	@Override
 	public void visit(JsonNull nul) {
-		consumer.append(new Event(EventType.PRIMITIVE, nul, nul.getPosition()));
+		consumer.append(new Token(TokenType.PRIMITIVE, nul, nul.getPosition()));
 	}
 }

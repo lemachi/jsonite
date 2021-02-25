@@ -59,8 +59,8 @@ public final class JsonValueConsumer implements Consumer {
 	}
 
 	@Override
-	public void append(Event tuple) {
-		switch(tuple.getEventType()) {
+	public void append(Token token) {
+		switch(token.getTokenType()) {
 		case START_OBJECT:
 			appendValue(last = new JsonObject());
 			break;
@@ -72,14 +72,14 @@ public final class JsonValueConsumer implements Consumer {
 			last = path.pop();
 			break;
 		case MEMBER_NAME:
-			name = tuple.getValue();
+			name = token.getValue();
 			break;
 		case PRIMITIVE:
-			last = tuple.getValue();
+			last = token.getValue();
 			appendValue(last);
 			break;
 		default:
-			throw new JsonException("Unsupported node type: " + tuple.getEventType());
+			throw new JsonException("Unsupported node type: " + token.getTokenType());
 		}
 	}
 

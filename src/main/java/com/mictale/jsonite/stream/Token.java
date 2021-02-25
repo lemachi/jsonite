@@ -22,43 +22,43 @@ import com.mictale.jsonite.SourcePosition;
 
 /**
  * A single element provided by a {@link Producer} and consumed by a
- * {@link Consumer}. An event is a combination of a {@link EventType}
+ * {@link Consumer}. A token is a combination of a {@link TokenType}
  * and a {@link JsonValue}.
  * 
  * @author michael@mictale.com
  */
-public final class Event {
+public final class Token {
 	
-	private final EventType eventType;
+	private final TokenType tokenType;
 	
 	private final JsonValue value;
 
 	private final SourcePosition position;
 
-    public Event(EventType nodeType, JsonValue value) {
+    public Token(TokenType nodeType, JsonValue value) {
         this(nodeType, value, null);
     }
 
-	public Event(EventType nodeType, JsonValue value, SourcePosition position) {
-		this.eventType = nodeType;
+	public Token(TokenType nodeType, JsonValue value, SourcePosition position) {
+		this.tokenType = nodeType;
 		this.value = value;
 		this.position = position;
 	}
 
 	/**
-	 * Returns the event type of this instance.
+	 * Returns the token type of this instance.
 	 * 
-	 * @return the event type.
+	 * @return the token type.
 	 */
-	public EventType getEventType() {
-		return eventType;
+	public TokenType getTokenType() {
+		return tokenType;
 	}
 
 	/**
-	 * Returns the value of this event or <code>null</code> if
+	 * Returns the value of this token or <code>null</code> if
 	 * the value is not defined.
 	 * 
-	 * @return the value of this event.
+	 * @return the value of this token.
 	 */
 	public JsonValue getValue() {
 		return value;
@@ -75,6 +75,6 @@ public final class Event {
 	
 	@Override
 	public String toString() {
-		return eventType.toString() + ":" + value;
+		return tokenType.toString() + ":" + value;
 	}
 }

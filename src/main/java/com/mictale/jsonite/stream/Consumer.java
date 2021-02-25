@@ -18,17 +18,17 @@
 package com.mictale.jsonite.stream;
 
 /**
- * Consumes {@link Event}s.
+ * Consumes {@link Token}s.
  * 
  * @author michael@mictale.com
  */
 public interface Consumer {
 
 	/**
-	 * Outputs a single {@link Event} to the stream represented by this instance.
+	 * Outputs a single {@link Token} to the stream represented by this instance.
 	 * 
-	 * @param event is the event to consume.
+	 * @param token is the event to consume.
 	 * @throws BrokenStreamException if the underlying stream causes an exception.
 	 */
-	void append(Event event) throws BrokenStreamException;
+	void append(Token token) throws BrokenStreamException;
 }

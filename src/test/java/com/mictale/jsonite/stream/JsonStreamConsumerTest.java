@@ -18,7 +18,7 @@ public class JsonStreamConsumerTest {
     public void testAppendTrue() {
         StringWriter w = new StringWriter();
         JsonStreamConsumer c = new JsonStreamConsumer(w);
-        c.append(new Event(EventType.PRIMITIVE, JsonValue.TRUE));
+        c.append(new Token(TokenType.PRIMITIVE, JsonValue.TRUE));
         assertThat(w.toString(), equalTo("true"));
     }
 
@@ -26,8 +26,8 @@ public class JsonStreamConsumerTest {
     public void testAppendEmptyArray() {
         StringWriter w = new StringWriter();
         JsonStreamConsumer c = new JsonStreamConsumer(w);
-        c.append(new Event(EventType.START_ARRAY, null));
-        c.append(new Event(EventType.END_ARRAY, null));
+        c.append(new Token(TokenType.START_ARRAY, null));
+        c.append(new Token(TokenType.END_ARRAY, null));
         assertThat(w.toString(), equalTo("[]"));
     }
 
@@ -35,11 +35,11 @@ public class JsonStreamConsumerTest {
     public void testAppendArray() {
         StringWriter w = new StringWriter();
         JsonStreamConsumer c = new JsonStreamConsumer(w);
-        c.append(new Event(EventType.START_ARRAY, null));
-        c.append(new Event(EventType.PRIMITIVE, JsonValue.of(1)));
-        c.append(new Event(EventType.PRIMITIVE, JsonValue.of(2)));
-        c.append(new Event(EventType.PRIMITIVE, JsonValue.of("foo")));
-        c.append(new Event(EventType.END_ARRAY, null));
+        c.append(new Token(TokenType.START_ARRAY, null));
+        c.append(new Token(TokenType.PRIMITIVE, JsonValue.of(1)));
+        c.append(new Token(TokenType.PRIMITIVE, JsonValue.of(2)));
+        c.append(new Token(TokenType.PRIMITIVE, JsonValue.of("foo")));
+        c.append(new Token(TokenType.END_ARRAY, null));
         assertThat(w.toString(), equalTo("[1,2,\"foo\"]"));
     }
 
@@ -47,12 +47,12 @@ public class JsonStreamConsumerTest {
     public void testAppendObject() {
         StringWriter w = new StringWriter();
         JsonStreamConsumer c = new JsonStreamConsumer(w);
-        c.append(new Event(EventType.START_OBJECT, null));
-        c.append(new Event(EventType.MEMBER_NAME, JsonValue.of("foo")));
-        c.append(new Event(EventType.PRIMITIVE, JsonValue.of(1)));
-        c.append(new Event(EventType.MEMBER_NAME, JsonValue.of("bar")));
-        c.append(new Event(EventType.PRIMITIVE, JsonValue.of(2)));
-        c.append(new Event(EventType.END_OBJECT, null));
+        c.append(new Token(TokenType.START_OBJECT, null));
+        c.append(new Token(TokenType.MEMBER_NAME, JsonValue.of("foo")));
+        c.append(new Token(TokenType.PRIMITIVE, JsonValue.of(1)));
+        c.append(new Token(TokenType.MEMBER_NAME, JsonValue.of("bar")));
+        c.append(new Token(TokenType.PRIMITIVE, JsonValue.of(2)));
+        c.append(new Token(TokenType.END_OBJECT, null));
         assertThat(w.toString(), equalTo("{\"foo\":1,\"bar\":2}"));
     }
 
@@ -60,12 +60,12 @@ public class JsonStreamConsumerTest {
     public void testAppendObjectPretty() {
         StringWriter w = new StringWriter();
         JsonStreamConsumer c = new JsonStreamConsumer(w);
-        c.append(new Event(EventType.START_OBJECT, null));
-        c.append(new Event(EventType.MEMBER_NAME, JsonValue.of("foo")));
-        c.append(new Event(EventType.PRIMITIVE, JsonValue.of(1)));
-        c.append(new Event(EventType.MEMBER_NAME, JsonValue.of("bar")));
-        c.append(new Event(EventType.PRIMITIVE, JsonValue.of(2)));
-        c.append(new Event(EventType.END_OBJECT, null));
+        c.append(new Token(TokenType.START_OBJECT, null));
+        c.append(new Token(TokenType.MEMBER_NAME, JsonValue.of("foo")));
+        c.append(new Token(TokenType.PRIMITIVE, JsonValue.of(1)));
+        c.append(new Token(TokenType.MEMBER_NAME, JsonValue.of("bar")));
+        c.append(new Token(TokenType.PRIMITIVE, JsonValue.of(2)));
+        c.append(new Token(TokenType.END_OBJECT, null));
         assertThat(w.toString(), equalTo("{\"foo\":1,\"bar\":2}"));
     }
 

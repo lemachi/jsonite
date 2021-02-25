@@ -23,17 +23,17 @@ import com.mictale.jsonite.JsonString;
 
 
 /**
- * Specifies the type of an {@link Event}.
+ * Specifies the type of an {@link Token}.token
  *
- * @see Event#getEventType()
+ * @see Token#getTokenType()
  * @author michael@mictale.com
  */
-public enum EventType {
+public enum TokenType {
 
 	/**
 	 * The beginning of a {@link JsonObject}.
 	 * 
-	 * The value returned by {@link Event#getValue()} can be either the {@link JsonObject}
+	 * The value returned by {@link Token#getValue()} can be either the {@link JsonObject}
 	 * that just begun or <code>null</code> if the stream implementation does not support
 	 * composite objects. 
 	 */
@@ -42,7 +42,7 @@ public enum EventType {
 	/**
 	 * A member of a {@link JsonObject}.
 	 * 
-	 * The value returned by {@link Event#getValue()} is a {@link JsonString} that represents
+	 * The value returned by {@link Token#getValue()} is a {@link JsonString} that represents
 	 * the name of the member.
 	 */
 	MEMBER_NAME,
@@ -50,7 +50,7 @@ public enum EventType {
 	/**
 	 * The end of a {@link JsonObject}.
 	 * 
-	 * The value returned by {@link Event#getValue()} can be either the {@link JsonObject}
+	 * The value returned by {@link Token#getValue()} can be either the {@link JsonObject}
 	 * that just ended or <code>null</code> if the stream implementation does not track
 	 * composite objects. 
 	 */
@@ -59,7 +59,7 @@ public enum EventType {
 	/**
 	 * The start of a {@link JsonArray}.
 	 * 
-	 * The value returned by {@link Event#getValue()} can be either the {@link JsonArray}
+	 * The value returned by {@link Token#getValue()} can be either the {@link JsonArray}
 	 * that just begun or <code>null</code> if the stream implementation does not track
 	 * composite objects. 
 	 */
@@ -68,7 +68,7 @@ public enum EventType {
 	/**
 	 * The end of a {@link JsonArray}.
 	 * 
-	 * The value returned by {@link Event#getValue()} can be either the {@link JsonArray}
+	 * The value returned by {@link Token#getValue()} can be either the {@link JsonArray}
 	 * that just ended or <code>null</code> if the stream implementation does not track
 	 * composite objects. 
 	 */
@@ -77,7 +77,7 @@ public enum EventType {
 	/**
 	 * A primitive value.
 	 * 
-	 * The value returned by {@link Event#getValue()} is either a top level element or a
+	 * The value returned by {@link Token#getValue()} is either a top level element or a
 	 * member of a {@link JsonObject} or {@link JsonArray}. A {@link JsonObject} or 
 	 * {@link JsonArray} itself will never produce this node type.
 	 */
