@@ -40,7 +40,7 @@ public final class JsonArray extends JsonValue implements List<JsonValue> {
 	/**
 	 * Represents a {@link JsonArray} that is empty.
 	 */
-	public static final JsonArray EMPTY = new JsonArray(Collections.<JsonValue>emptyList());
+	public static final JsonArray EMPTY = new JsonArray(Collections.emptyList());
 	
 	protected final List<JsonValue> elements;
 
@@ -329,12 +329,17 @@ public final class JsonArray extends JsonValue implements List<JsonValue> {
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof JsonArray) {
-			JsonArray other = (JsonArray)obj;
-			return other.size() == size() && elements.containsAll(other.elements);
+			// JSON arrays are ordered: same elements in the same order.
+			return elements.equals(((JsonArray)obj).elements);
 		}
 		else {
 			return false;
 		}
+	}
+
+	@Override
+	public int hashCode() {
+		return elements.hashCode();
 	}
 	
 	private final class Iter implements Iterator<JsonValue> {

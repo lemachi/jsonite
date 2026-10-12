@@ -87,14 +87,14 @@ public final class JsonValueConsumer implements Consumer {
      * Retrieves the value produced by this instance.
      *
      * The instance has to be at a consistent state or invoking this method will throw
-     * an {@link IllegalStateException}
+     * a {@link JsonException}.
      *
      * @return the value that has been produced.
-     * @throws IllegalStateException when consuming the stream is incomplete.
+     * @throws JsonException when consuming the stream is incomplete.
      */
 	public JsonValue getValue() {
 		if (path.size() != 0) {
-			throw new IllegalStateException("The token stream is incomplete");
+			throw new JsonException("The token stream is incomplete");
 		}
 		return last;
 	}

@@ -29,14 +29,31 @@ public class JsonPrettyStreamConsumer extends JsonStreamConsumer {
         writer.write(" ");
     }
 
+    /** True between an opening bracket and its first element, so empty containers stay on one line. */
+    private boolean opened;
+
+    @Override
     protected void addIndent() throws IOException {
         indent++;
-        newLine();
+        opened = true;
     }
 
+    @Override
+    protected void beforeElement() throws IOException {
+        if (opened) {
+            opened = false;
+            newLine();
+        }
+    }
+
+    @Override
     protected void removeIndent() throws IOException {
         indent--;
-        newLine();
+        if (opened) {
+            opened = false;
+        } else {
+            newLine();
+        }
     }
 
 

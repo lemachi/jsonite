@@ -104,7 +104,11 @@ public final class Transformation {
 	 */
 	public static String asString(Producer producer, boolean prettify) {
 		StringWriter sw = new StringWriter();
-		copy(sw, producer);
+		if (prettify) {
+			prettyCopy(sw, producer);
+		} else {
+			copy(sw, producer);
+		}
 		return sw.toString();
 	}
 

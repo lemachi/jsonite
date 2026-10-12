@@ -28,6 +28,8 @@ import com.mictale.jsonite.stream.JsonValueConsumer;
 import com.mictale.jsonite.stream.JsonVisitor;
 import com.mictale.jsonite.stream.Transformation;
 
+import org.jspecify.annotations.NonNull;
+
 /**
  * The most basic JSON type.
  * <p>
@@ -88,7 +90,7 @@ public abstract class JsonValue {
 	 * <td>{@link JsonValue#TRUE}</td>
 	 * </tr>
 	 * <tr>
-	 * <td><code>{@link java.lang.Boolean#TRUE}</code></td>
+	 * <td><code>{@link Boolean#TRUE}</code></td>
 	 * <td>{@link JsonValue#TRUE}</td>
 	 * </tr>
 	 * <tr>
@@ -96,15 +98,15 @@ public abstract class JsonValue {
 	 * <td>{@link JsonValue#FALSE}</td>
 	 * </tr>
 	 * <tr>
-	 * <td><code>{@link java.lang.Boolean#FALSE}</code></td>
+	 * <td><code>{@link Boolean#FALSE}</code></td>
 	 * <td>{@link JsonValue#FALSE}</td>
 	 * </tr>
 	 * <tr>
-	 * <td><code>{@link java.lang.String}</code></td>
+	 * <td><code>{@link String}</code></td>
 	 * <td>{@link JsonString}</td>
 	 * </tr>
 	 * <tr>
-	 * <td><code>{@link java.lang.Number}</code></td>
+	 * <td><code>{@link Number}</code></td>
 	 * <td>{@link JsonNumber}</td>
 	 * </tr>
 	 * <tr>
@@ -119,6 +121,7 @@ public abstract class JsonValue {
 	 * @throws JsonException
 	 *             when the object type could not be converted.
 	 */
+    @NonNull
 	public static JsonValue of(Object obj) {
 		if (obj == null) {
 			return JsonValue.NULL;
@@ -147,16 +150,19 @@ public abstract class JsonValue {
 	/**
 	 * Represents the <code>true</code> literal object.
 	 */
+    @NonNull
 	public static final JsonValue TRUE = new JsonBoolean(Boolean.TRUE);
 
 	/**
 	 * Represents the <code>false</code> literal object.
 	 */
+    @NonNull
 	public static final JsonValue FALSE = new JsonBoolean(Boolean.FALSE);
 
 	/**
 	 * Represents the <code>null</code> literal object.
 	 */
+    @NonNull
 	public static final JsonValue NULL = new JsonNull();
 
 	public SourcePosition getPosition() {
@@ -265,7 +271,7 @@ public abstract class JsonValue {
 	 * @return the object value.
 	 */
 	public Object objectValue() {
-		throw createConversionException("String");		
+		throw createConversionException("Object");		
 	}
 	
 	/**
@@ -399,10 +405,10 @@ public abstract class JsonValue {
 	 * @param json
 	 *            is the string representation.
 	 * @return the object representation.
-	 * @throws IOException
+	 * @throws JsonException
 	 */
 	public static JsonValue parse(String json) {
-		if (json == null) {
+		if (json == null || json.length() == 0) {
 			return JsonValue.NULL;
 		}
 		else {

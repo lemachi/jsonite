@@ -8,7 +8,42 @@ What you can do with Jsonite:
  * Converts an object hierarchy of `JsonValue`s into a sequence of characters.
  * Write objects into a stream.
  * Read a stream into objects.
- 
+
+It needs Java 11 or Android API 24 and depends on nothing but the
+[JSpecify](https://jspecify.dev) nullness annotations.
+
+## Installation
+
+Releases are built by [JitPack](https://jitpack.io/#lemachi/jsonite) from
+the tags of this repository. With the Gradle Kotlin DSL:
+
+```kotlin
+// settings.gradle.kts
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+        exclusiveContent {
+            forRepository { maven("https://jitpack.io") }
+            filter { includeGroup("com.github.lemachi") }
+        }
+    }
+}
+
+// build.gradle.kts
+dependencies {
+    implementation("com.github.lemachi:jsonite:1.0.1")
+}
+```
+
+## Building
+
+```
+./gradlew build
+```
+
+runs the unit tests and fails when they cover less than 90% of lines or
+branches. The coverage report is in `build/reports/jacoco/test/html`.
+
 ## Parsing
 
 Here is how you parse a JSON string:
