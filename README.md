@@ -31,7 +31,7 @@ dependencyResolutionManagement {
 
 // build.gradle.kts
 dependencies {
-    implementation("com.github.lemachi:jsonite:1.0.0")
+    implementation("com.github.lemachi:jsonite:1.0.1")
 }
 ```
 

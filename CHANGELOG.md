@@ -1,8 +1,12 @@
 # Changelog
 
-## 1.0.0
+## 1.0.1
 
-The first tagged release, and the first published one. It brings the
+The first real release. The tag `1.0.0` was pushed by mistake onto the
+2021 commit before this work was merged, and JitPack built it from there;
+do not use `1.0.0`.
+
+The first published release. It brings the
 library in line with the copy GPS Essentials has carried since 2021 and
 fixes what new tests found.
 
