@@ -24,7 +24,7 @@ tasks.withType<Javadoc>().configureEach {
 
 dependencies {
     // Nullness annotations that Kotlin reads; runtime-free, a few kilobytes.
-    api("org.jspecify:jspecify:1.0.0")
+    api("org.jspecify:jspecify:1.0.1")
 
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.hamcrest:hamcrest:3.0")
