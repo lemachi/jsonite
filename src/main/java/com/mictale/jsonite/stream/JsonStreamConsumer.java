@@ -51,13 +51,18 @@ public class JsonStreamConsumer implements Consumer, JsonVisitor {
     protected void space() throws IOException {
     }
 
-	private void addIndent() throws IOException {
+	protected void addIndent() throws IOException {
 	}
 	
-	private void removeIndent() throws IOException {
+	protected void removeIndent() throws IOException {
+	}
+
+	/** Called before every element, member name or value is written. */
+	protected void beforeElement() throws IOException {
 	}
 
     private void appendSeparator() throws IOException {
+        beforeElement();
         if (valueWritten) {
             writer.write(JsonSyntax.SEPARATOR);
             valueWritten = false;
@@ -161,7 +166,12 @@ public class JsonStreamConsumer implements Consumer, JsonVisitor {
 					writer.write(JsonSyntax.ESCAPE_TAB);
 					break;
 				default:
-					writer.write(ch);
+					if (ch < 0x20) {
+						// JSON allows no raw control characters in strings.
+						writer.write(String.format("\\u%04x", (int) ch));
+					} else {
+						writer.write(ch);
+					}
 					break;
 				}
 			}
@@ -185,6 +195,10 @@ public class JsonStreamConsumer implements Consumer, JsonVisitor {
 	@Override
 	public void visit(JsonNumber number) {
 		try {
+            if (!Double.isFinite(number.doubleValue())) {
+                // Dont write infinite numbers, this is not defined in JSON.
+                throw new BrokenStreamException("Number must be finite");
+            }
 			writer.write(number.stringValue());
 		}
 		catch(IOException e) {

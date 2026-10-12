@@ -179,4 +179,9 @@ public final class JsonObject extends JsonValue implements Map<String, JsonValue
 			return false;
 		}
 	}
+
+	@Override
+	public int hashCode() {
+		return members.hashCode();
+	}
 }

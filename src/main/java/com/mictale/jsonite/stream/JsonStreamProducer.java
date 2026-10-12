@@ -45,7 +45,7 @@ public final class JsonStreamProducer implements Producer {
 	
 	private Consumer consumer;
 
-	private TokenType lastNodeType = TokenType.UNDEFINED;
+	private TokenType lastTokenType = TokenType.UNDEFINED;
 
 	private int lastChar;
 
@@ -59,15 +59,19 @@ public final class JsonStreamProducer implements Producer {
 		this(new StringReader(json));
 	}
 
+	private static String describe(int ch) {
+		return ch == EOS ? "end of input" : "'" + (char) ch + "'";
+	}
+
 	private void throwUnexpected(String expected, String found) {
 		throw new BrokenStreamException("Expected " + expected + " found " + found + " at line " + line + ", position " + column);
 	}
 	
-	private void append(TokenType nodeType, JsonValue value) {
+	private void append(TokenType tokenType, JsonValue value) {
 		SourcePosition p = new SourcePosition(position, line, column);
-		Token event = new Token(nodeType, value, p);
-		consumer.append(event);
-		this.lastNodeType = nodeType;
+		Token token = new Token(tokenType, value, p);
+		consumer.append(token);
+		this.lastTokenType = tokenType;
 	}
 
 	private void eat(String expected) throws IOException {
@@ -122,11 +126,14 @@ public final class JsonStreamProducer implements Producer {
 			default:
 				buffer.append((char) lastChar);
 				break;
+			case EOS:
+				throwUnexpected("'\"'", "end of input");
+				break;
 			case JsonSyntax.STRING_QUOTE:
 				skipWs();
 				return buffer.toString();
 			case JsonSyntax.STRING_ESCAPE:
-				skipWs();
+				skip();
 				switch (lastChar) {
 				case JsonSyntax.STRING_QUOTE:
 					buffer.append(JsonSyntax.STRING_QUOTE);
@@ -153,12 +160,19 @@ public final class JsonStreamProducer implements Producer {
 					buffer.append('\t');
 					break;
 				case 'u':
-					byte[] data = new byte[] {
-							(byte)(Character.digit((char) skip(), 16) << 4 | Character.digit((char) skip(), 16)),
-							(byte)(Character.digit((char) skip(), 16) << 4 | Character.digit((char) skip(), 16)) };
-										
-					buffer.append(new String(data, "UNICODE"));
+					// One UTF-16 code unit; a surrogate pair is two escapes and joins up in the buffer.
+					int code = 0;
+					for (int i = 0; i < 4; i++) {
+						int digit = Character.digit((char) skip(), 16);
+						if (lastChar == EOS || digit < 0) {
+							throwUnexpected("hex digit", describe(lastChar));
+						}
+						code = code << 4 | digit;
+					}
+					buffer.append((char) code);
 					break;
+				default:
+					throwUnexpected("escape character", describe(lastChar));
 				}
 			}
 		}
@@ -194,6 +208,8 @@ public final class JsonStreamProducer implements Producer {
 			if ('N' == (char)lastChar) {
 				eat("NaN");
 				append(TokenType.PRIMITIVE, JsonNumber.of(Double.NaN));
+			} else {
+				throwUnexpected("digit", describe(lastChar));
 			}
 		}
 		else {
@@ -220,9 +236,13 @@ public final class JsonStreamProducer implements Producer {
 				buffer.append((char) lastChar);
 				skip();
 	
-				if (lastChar == JsonSyntax.NUMBER_SIGN) {
+				if (lastChar == JsonSyntax.NUMBER_SIGN || lastChar == '+') {
 					buffer.append((char) lastChar);
 					skip();
+				}
+
+				if (!Character.isDigit((char) lastChar)) {
+					throwUnexpected("digit", describe(lastChar));
 				}
 	
 				while (Character.isDigit((char) lastChar)) {
@@ -301,7 +321,7 @@ public final class JsonStreamProducer implements Producer {
 			running = parseAny();
 			
 			while (running) {
-				switch (lastNodeType) {
+				switch (lastTokenType) {
 				case START_OBJECT:
 					skipWs();
 					running = parseAny();
