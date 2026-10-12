@@ -1,0 +1,32 @@
+name: Bug report
+description: Jsonite parses, writes or converts something wrongly.
+labels: [bug]
+body:
+  - type: input
+    id: version
+    attributes:
+      label: Jsonite version
+      placeholder: 1.0.0
+    validations:
+      required: true
+  - type: textarea
+    id: input
+    attributes:
+      label: Input
+      description: The smallest JSON text or Java code that shows the problem.
+      render: java
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: What happened
+      description: Output, or the exception with its stack trace.
+    validations:
+      required: true

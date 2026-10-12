@@ -1,0 +1,16 @@
+name: Feature request
+description: Something Jsonite should do.
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What you are trying to do and why the current API makes it hard.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal
+      description: The API you have in mind, if any.
